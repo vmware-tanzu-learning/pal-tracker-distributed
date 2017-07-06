@@ -1,0 +1,5 @@
+databases {
+    devDatabase = "tracker_allocations_dev"
+    testDatabase = "tracker_allocations_test"
+    cfApp = "tracker-allocations"
+}

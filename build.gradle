@@ -1,0 +1,44 @@
+import io.pivotal.pal.tracker.gradlebuild.DependenciesGraphPlugin
+
+buildscript {
+    ext {
+        springBootVersion = "1.5.3.RELEASE"
+        springVersion = "4.3.8.RELEASE"
+        mysqlVersion = "6.0.6"
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "mysql:mysql-connector-java:$mysqlVersion"
+    }
+}
+
+apply plugin: DependenciesGraphPlugin
+
+subprojects {
+    group "io.pivotal.pal.tracker"
+
+    apply plugin: "java"
+    defaultTasks "clean", "build"
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        compile "com.fasterxml.jackson.core:jackson-core:2.8.4"
+        compile "com.fasterxml.jackson.core:jackson-databind:2.8.4"
+        compile "com.fasterxml.jackson.core:jackson-annotations:2.8.4"
+        compile "org.slf4j:slf4j-api:1.7.10"
+
+        testCompile "junit:junit:4.12"
+        testCompile "org.mockito:mockito-core:2.2.26"
+        testCompile "org.assertj:assertj-core:3.8.0"
+    }
+}
