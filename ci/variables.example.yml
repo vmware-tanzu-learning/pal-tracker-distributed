@@ -1,0 +1,15 @@
+github-repo: git@github.com:YOUR_GITHUB_USERNAME/pal-tracker-distributed.git
+github-private-key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  ...
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  -----END RSA PRIVATE KEY-----
+
+cf-username: YOUR_CF_USERNAME
+cf-password: YOUR_CF_PASSWORD
+cf-url: https://YOUR_CF_URL
+cf-org: YOUR_DEPLOY_CF_ORG
+aws-access-key-id: YOUR_ACCESS_KEY
+aws-secret-access-key: YOUR_SECRET_KEY
+aws-bucket: YOUR_AWS_S3_BUCKET

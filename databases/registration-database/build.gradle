@@ -1,0 +1,5 @@
+databases {
+    devDatabase = "tracker_registration_dev"
+    testDatabase = "tracker_registration_test"
+    cfApp = "tracker-registration"
+}
