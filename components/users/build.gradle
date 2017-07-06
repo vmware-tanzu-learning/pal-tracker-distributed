@@ -1,0 +1,5 @@
+dependencies {
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile project(":components:rest-support")
+    testCompile project(":components:test-support")
+}
