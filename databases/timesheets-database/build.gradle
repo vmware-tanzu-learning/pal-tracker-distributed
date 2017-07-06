@@ -1,0 +1,5 @@
+databases {
+    devDatabase = "tracker_timesheets_dev"
+    testDatabase = "tracker_timesheets_test"
+    cfApp = "tracker-timesheets"
+}
