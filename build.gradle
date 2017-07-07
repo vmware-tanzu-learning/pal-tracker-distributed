@@ -17,6 +17,8 @@ buildscript {
         springCloudVersion = "Greenwich.SR5"
         springCloudServicesClientLibrariesVersion = "2.1.7.RELEASE"
         springCloudCommonsVersion = "2.1.5.RELEASE"
+        springSecurityOAuthAutoconfigVersion = "2.1.0.RELEASE"
+        springCloudSsoVersion = "2.1.3.RELEASE"
     }
 
     repositories {
