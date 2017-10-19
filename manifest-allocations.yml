@@ -1,10 +1,10 @@
 applications:
 - name: tracker-allocations
   path: ./applications/allocations-server/build/libs/allocations-server.jar
-  host: allocations-pal-INITIALS
+  host: allocations-pal-ck
   memory: 1G
   instances: 1
   env:
-    REGISTRATION_SERVER_ENDPOINT: http://FILL_ME_IN
+    REGISTRATION_SERVER_ENDPOINT: http://registration-server-ck.apps.longs.pal.pivotal.io
   services:
   - tracker-allocations-database

@@ -1,10 +1,10 @@
 applications:
 - name: tracker-timesheets
   path: ./applications/timesheets-server/build/libs/timesheets-server.jar
-  host: timesheets-pal-INITIALS
+  host: timesheets-pal-ck
   memory: 1G
   instances: 1
   env:
-    REGISTRATION_SERVER_ENDPOINT: http://FILL_ME_IN
+    REGISTRATION_SERVER_ENDPOINT: http://registration-server-ck.apps.longs.pal.pivotal.io
   services:
   - tracker-timesheets-database
