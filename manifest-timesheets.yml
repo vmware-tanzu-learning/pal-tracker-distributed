@@ -5,6 +5,6 @@ applications:
   memory: 1G
   instances: 1
   env:
-    REGISTRATION_SERVER_ENDPOINT: http://registration-server-ck.apps.longs.pal.pivotal.io
+    REGISTRATION_SERVER_ENDPOINT: http://registration-pal-ck.apps.longs.pal.pivotal.io
   services:
   - tracker-timesheets-database
