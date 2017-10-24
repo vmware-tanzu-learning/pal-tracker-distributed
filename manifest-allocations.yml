@@ -1,10 +1,11 @@
 applications:
 - name: tracker-allocations
   path: ./applications/allocations-server/build/libs/allocations-server.jar
-  host: allocations-pal-INITIALS
+  host: allocations-pal-ck
   memory: 1G
   instances: 1
-  env:
-    REGISTRATION_SERVER_ENDPOINT: http://FILL_ME_IN
   services:
   - tracker-allocations-database
+  - tracker-service-registry
+  - tracker-circuit-breaker-dashboard
+  - tracker-amqp
