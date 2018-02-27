@@ -4,8 +4,6 @@ applications:
   host: allocations-pal-yaniv
   memory: 1G
   instances: 1
-  env:
-    REGISTRATION_SERVER_ENDPOINT: http://registration-pal-yaniv.apps.longs.pal.pivotal.io
-
   services:
   - tracker-allocations-database
+  - tracker-service-registry
