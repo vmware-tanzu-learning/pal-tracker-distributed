@@ -33,6 +33,11 @@ bootRun.environment([
         "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
         "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret",
         "SECURITY_USER_NAME": "actuator",
-        "SECURITY_USER_PASSWORD": "operations4red"
+        "SECURITY_USER_PASSWORD": "operations4red",
+        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server"
+])
+
+test.environment([
+        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server"
 ])
 
