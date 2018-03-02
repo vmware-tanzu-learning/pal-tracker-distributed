@@ -22,6 +22,7 @@ dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry"
+    compile "io.pivotal.spring.cloud:spring-cloud-services-starter-config-client"
 
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker"
     compile "org.springframework.cloud:spring-cloud-starter-oauth2"
