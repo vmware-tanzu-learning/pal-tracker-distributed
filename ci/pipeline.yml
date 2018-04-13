@@ -91,7 +91,7 @@ jobs:
   - get: allocations-artifacts
     trigger: false
   - task: migrate database
-    file: pal-tracker-distributed/ci/migrateDatabase.yml
+    file: pal-tracker/ci/migrateDatabase.yml
     params:
       CF_API_URL: {{cf-api-url}}
       CF_USERNAME: {{cf-username}}
@@ -106,7 +106,7 @@ jobs:
       CURRENT_APP_NAME: tracker-allocations
   - put: cf
     params:
-      manifest: pal-tracker-distributed/manifest-allocations.yml
+      manifest: pal-tracker/manifest-allocations.yml
       path: allocations-artifacts/allocations-server*.jar
       current_app_name: tracker-allocations
 
@@ -118,7 +118,7 @@ jobs:
   - get: backlog-artifacts
     trigger: false
   - task: migrate database
-    file: pal-tracker-distributed/ci/migrateDatabase.yml
+    file: pal-tracker/ci/migrateDatabase.yml
     params:
       CF_API_URL: {{cf-api-url}}
       CF_USERNAME: {{cf-username}}
@@ -133,7 +133,7 @@ jobs:
       CURRENT_APP_NAME: tracker-backlog
   - put: cf
     params:
-      manifest: pal-tracker-distributed/manifest-backlog.yml
+      manifest: pal-tracker/manifest-backlog.yml
       path: backlog-artifacts/backlog-server*.jar
       current_app_name: tracker-backlog
 - name: deploy-registration
@@ -144,7 +144,7 @@ jobs:
   - get: registration-artifacts
     trigger: false
   - task: migrate database
-    file: pal-tracker-distributed/ci/migrateDatabase.yml
+    file: pal-tracker/ci/migrateDatabase.yml
     params:
       CF_API_URL: {{cf-api-url}}
       CF_USERNAME: {{cf-username}}
@@ -159,7 +159,7 @@ jobs:
       CURRENT_APP_NAME: tracker-registration
   - put: cf
     params:
-      manifest: pal-tracker-distributed/manifest-registration.yml
+      manifest: pal-tracker/manifest-registration.yml
       path: registration-artifacts/registration-server*.jar
       current_app_name: tracker-registration
 
@@ -171,7 +171,7 @@ jobs:
   - get: timesheets-artifacts
     trigger: false
   - task: migrate database
-    file: pal-tracker-distributed/ci/migrateDatabase.yml
+    file: pal-tracker/ci/migrateDatabase.yml
     params:
       CF_API_URL: {{cf-api-url}}
       CF_USERNAME: {{cf-username}}
@@ -186,6 +186,6 @@ jobs:
       CURRENT_APP_NAME: tracker-timesheets
   - put: cf
     params:
-      manifest: pal-tracker-distributed/manifest-timesheets.yml
+      manifest: pal-tracker/manifest-timesheets.yml
       path: timesheets-artifacts/timesheets-server*.jar
       current_app_name: tracker-timesheets
