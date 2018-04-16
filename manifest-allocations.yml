@@ -4,7 +4,6 @@ applications:
   host: allocations-pal-sf
   memory: 1G
   instances: 1
-  env:
-    REGISTRATION_SERVER_ENDPOINT: https://registration-pal-sf.apps.longs.pal.pivotal.io/
   services:
   - tracker-allocations-database
+  - tracker-service-registry
