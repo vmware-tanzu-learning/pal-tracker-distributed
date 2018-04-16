@@ -23,7 +23,7 @@ public class FlowTest {
     private ApplicationServer allocationsServer = new ApplicationServer(workingDir + "/../applications/allocations-server/build/libs/allocations-server.jar", "8881");
     private ApplicationServer backlogServer = new ApplicationServer(workingDir + "/../applications/backlog-server/build/libs/backlog-server.jar", "8882");
     private ApplicationServer timesheetsServer = new ApplicationServer(workingDir + "/../applications/timesheets-server/build/libs/timesheets-server.jar", "8884");
-    private ApplicationServer eurekaServer = new ApplicationServer(workingDir + "/../platform-services/eureka-server/build/libs/eureka-server.jar", "8761");
+    //private ApplicationServer eurekaServer = new ApplicationServer(workingDir + "/../platform-services/eureka-server/build/libs/eureka-server.jar", "8761");
 
     private String registrationServerUrl(String path) {
         return "http://localhost:8883" + path;
@@ -41,9 +41,9 @@ public class FlowTest {
         return "http://localhost:8884" + path;
     }
 
-    private String eurekaServerUrl(String path) {
+  /*  private String eurekaServerUrl(String path) {
         return "http://localhost:8761" + path;
-    }
+    }*/
 
     private long findResponseId(HttpClient.Response response) {
         try {
