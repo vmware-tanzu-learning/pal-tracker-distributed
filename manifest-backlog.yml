@@ -8,3 +8,4 @@ applications:
   services:
   - tracker-service-registry
   - tracker-backlog-database
+  - tracker-circuit-breaker-dashboard

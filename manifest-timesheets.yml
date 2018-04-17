@@ -7,3 +7,4 @@ applications:
   services:
   - tracker-service-registry
   - tracker-timesheets-database
+  - tracker-circuit-breaker-dashboard
