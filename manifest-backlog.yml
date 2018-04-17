@@ -1,10 +1,14 @@
 applications:
 - name: tracker-backlog
   path: ./applications/backlog-server/build/libs/backlog-server.jar
-  host: backlog-pal-INITIALS
+  host: backlog-pal-sf
   memory: 1G
   instances: 1
   env:
-    REGISTRATION_SERVER_ENDPOINT: http://FILL_ME_IN
+    GRANT_TYPE: client_credentials
   services:
   - tracker-backlog-database
+  - tracker-service-registry
+  - tracker-circuit-breaker-dashboard
+  - tracker-sso
+  - tracker-config-server

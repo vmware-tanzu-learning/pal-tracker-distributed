@@ -1,8 +1,14 @@
 applications:
 - name: tracker-registration
   path: ./applications/registration-server/build/libs/registration-server.jar
-  host: registration-pal-INITIALS
+  host: registration-pal-sf
   memory: 1G
   instances: 1
+  env:
+    GRANT_TYPE: client_credentials
   services:
   - tracker-registration-database
+  - tracker-service-registry
+  - tracker-circuit-breaker-dashboard
+  - tracker-sso
+  - tracker-config-server

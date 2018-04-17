@@ -1,4 +1,11 @@
 apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:$springCloudServicesVersion"
+    }
+}
 
 dependencies {
     compile project(":components:rest-support")
@@ -8,6 +15,24 @@ dependencies {
     compile "com.zaxxer:HikariCP:2.3.7"
     compile "mysql:mysql-connector-java:$mysqlVersion"
     compile "ch.qos.logback:logback-classic:1.1.11"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry"
+    compile "io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker"
+    compile "org.springframework.cloud:spring-cloud-starter-oauth2"
+    compile "io.pivotal.spring.cloud:spring-cloud-sso-connector:$springCloudSsoVersion"
+    compile "io.pivotal.spring.cloud:spring-cloud-services-starter-config-client"
 
     testCompile project(":components:test-support")
 }
+bootRun.environment([
+        "APPLICATION_OAUTH_ENABLED": true,
+        "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
+        "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret",
+        "SECURITY_USER_NAME": "actuator",
+        "SECURITY_USER_PASSWORD": "operations4red",
+        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server"
+])
+
+test.environment([
+        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server"
+])
