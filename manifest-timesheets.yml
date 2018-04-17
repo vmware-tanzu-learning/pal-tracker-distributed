@@ -7,7 +7,7 @@ applications:
   env:
     GRANT_TYPE: client_credentials
   services:
-  - tracker-backlog-database
+  - tracker-timesheets-database
   - tracker-service-registry
   - tracker-circuit-breaker-dashboard
   - tracker-sso
