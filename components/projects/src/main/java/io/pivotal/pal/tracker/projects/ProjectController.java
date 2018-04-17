@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static io.pivotal.pal.tracker.projects.ProjectInfo.projectInfoBuilder;
 import static io.pivotal.pal.tracker.projects.data.ProjectFields.projectFieldsBuilder;
@@ -44,7 +45,7 @@ public class ProjectController {
         if (record != null) {
             return present(record);
         }
-
+        IntStream.range(0,10).forEach(x -> System.out.println(x));
         return null;
     }
 
