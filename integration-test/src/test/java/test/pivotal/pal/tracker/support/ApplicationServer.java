@@ -1,10 +1,12 @@
 package test.pivotal.pal.tracker.support;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.fail;
 import static test.pivotal.pal.tracker.support.MapBuilder.envMapBuilder;
 
@@ -20,6 +22,15 @@ public class ApplicationServer {
         this.port = port;
     }
 
+    public static void checkNothingRunningOnPorts(int... ports) {
+        for (int port : ports) {
+            try {
+                new Socket("localhost", port);
+                throw new IllegalStateException(format("Expected port %d to be available, check for running JARs with jps -l", port));
+            } catch (IOException ignored) {
+            }
+        }
+    }
 
     public void start(Map<String, String> env) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder()
@@ -37,7 +48,9 @@ public class ApplicationServer {
 
         start(envMapBuilder()
             .put("SPRING_DATASOURCE_URL", dbUrl)
-            .put("REGISTRATION_SERVER_ENDPOINT", "http://localhost:8883")
+            .put("EUREKA_CLIENT_ENABLED", "false")
+            .put("RIBBON_EUREKA_ENABLED", "false")
+            .put("REGISTRATION_SERVER_RIBBON_LISTOFSERVERS", "http://localhost:8883")
             .build()
         );
     }

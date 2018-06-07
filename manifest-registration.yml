@@ -7,3 +7,4 @@ applications:
   instances: 1
   services:
   - tracker-registration-database
+  - tracker-service-registry
