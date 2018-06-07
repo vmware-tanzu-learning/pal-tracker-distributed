@@ -6,6 +6,15 @@ dependencyManagement {
         mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:$springCloudServicesVersion"
     }
 }
+
+bootRun.environment([
+        "APPLICATION_OAUTH_ENABLED": true,
+        "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
+        "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret",
+        "SECURITY_USER_NAME": "actuator",
+        "SECURITY_USER_PASSWORD": "operations4red"
+])
+
 dependencies {
     compile project(":components:rest-support")
 
@@ -17,6 +26,7 @@ dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry"
+    compile "io.pivotal.spring.cloud:spring-cloud-sso-connector:$springCloudSsoVersion"
 
     testCompile project(":components:test-support")
 }

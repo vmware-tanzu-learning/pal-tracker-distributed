@@ -7,6 +7,7 @@ buildscript {
         mysqlVersion = "6.0.6"
         springCloudDependenciesVersion = "Edgware.SR3"
         springCloudServicesVersion = "1.6.3.RELEASE"
+        springCloudSsoVersion = "1.1.0.RELEASE"
     }
 
     repositories {
