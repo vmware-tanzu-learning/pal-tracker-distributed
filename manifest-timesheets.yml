@@ -2,7 +2,7 @@ applications:
 - name: tracker-timesheets
   path: ./applications/timesheets-server/build/libs/timesheets-server.jar
   routes:
-  - route: timesheets-pal-HBRG.apps.pikes.pal.pivotal.io
+  - route: timesheets-pal-hb.apps.pikes.pal.pivotal.io
   memory: 1G
   instances: 1
   env:

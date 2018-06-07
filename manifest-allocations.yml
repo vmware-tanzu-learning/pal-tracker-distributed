@@ -2,10 +2,10 @@ applications:
 - name: tracker-allocations
   path: ./applications/allocations-server/build/libs/allocations-server.jar
   routes:
-  - route: allocations-pal-HBRRG.apps.pikes.pal.pivotal.io
+  - route: allocations-pal-hb.apps.pikes.pal.pivotal.io
   memory: 1G
   instances: 1
   env:
-    REGISTRATION_SERVER_ENDPOINT: http:/registration-pal-hb.apps.pikes.pal.pivotal.io
+    REGISTRATION_SERVER_ENDPOINT: http://registration-pal-hb.apps.pikes.pal.pivotal.io
   services:
   - tracker-allocations-database
