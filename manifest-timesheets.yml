@@ -1,0 +1,12 @@
+applications:
+- name: tracker-timesheets
+  path: ./applications/timesheets-server/build/libs/timesheets-server.jar
+  routes:
+  - route: timesheets-pal-${UNIQUE_IDENTIFIER}.${DOMAIN}
+  memory: 1G
+  instances: 1
+  env:
+    REGISTRATION_SERVER_ENDPOINT: http://${REGISTRATION_SERVER_ROUTE}
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+  services:
+  - tracker-timesheets-database

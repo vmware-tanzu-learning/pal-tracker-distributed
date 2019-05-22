@@ -1,0 +1,7 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.flywaydb:flyway-gradle-plugin:5.2.1"
+}

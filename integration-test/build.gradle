@@ -1,0 +1,10 @@
+dependencies {
+    testCompile project(":components:test-support")
+    testCompile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    testCompile "com.jayway.jsonpath:json-path:$jsonPathVersion"
+}
+
+test.dependsOn ":applications:allocations-server:assemble"
+test.dependsOn ":applications:backlog-server:assemble"
+test.dependsOn ":applications:registration-server:assemble"
+test.dependsOn ":applications:timesheets-server:assemble"

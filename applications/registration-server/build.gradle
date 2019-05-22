@@ -1,0 +1,7 @@
+apply from: "$projectDir/../server.gradle"
+
+dependencies {
+    compile project(":components:accounts")
+    compile project(":components:projects")
+    compile project(":components:users")
+}

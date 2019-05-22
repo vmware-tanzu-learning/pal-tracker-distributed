@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":components:rest-support")
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "mysql:mysql-connector-java:$mysqlVersion"
+    compile "junit:junit:$junitVersion"
+}
