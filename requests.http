@@ -1,0 +1,49 @@
+### Create user
+POST {{registrationUrl}}/registration
+Content-Type: application/json
+
+{"name": "Sally"}
+
+### Get user
+GET {{registrationUrl}}/users/USER-ID
+
+### Get account
+GET {{registrationUrl}}/accounts?ownerId=USER-ID
+
+### Create project
+POST {{registrationUrl}}/projects
+Content-Type: application/json
+
+{"name": "Basket Weaving III", "accountId": ACCOUNT-ID}
+
+### Get projects
+GET {{registrationUrl}}/projects?accountId=ACCOUNT-ID
+
+### Create allocation
+POST {{allocationsUrl}}/allocations
+Content-Type: application/json
+
+{"projectId": PROJECT-ID, "userId": USER-ID, "firstDay": "2015-05-17", "lastDay": "2015-05-18"}
+
+### Get allocations
+GET {{allocationsUrl}}/allocations?projectId=PROJECT-ID
+
+### Create story
+POST {{backlogUrl}}/stories
+Content-Type: application/json
+
+{"projectId": PROJECT-ID, "name": "Find some reeds"}
+
+### Get stories
+GET {{backlogUrl}}/stories?projectId=PROJECT-ID
+
+### Create timesheet
+POST {{timesheetsUrl}}/time-entries/
+Content-Type: application/json
+
+{"projectId": PROJECT-ID, "userId": USER-ID, "date": "2015-05-17", "hours": 6}
+
+### Get timesheets
+GET {{timesheetsUrl}}/time-entries?userId=USER-ID
+
+###

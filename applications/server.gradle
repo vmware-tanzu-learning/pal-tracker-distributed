@@ -1,0 +1,14 @@
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+dependencies {
+    compile project(":components:rest-support")
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+
+    compile "com.zaxxer:HikariCP:$hikariVersion"
+    compile "mysql:mysql-connector-java:$mysqlVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+    testCompile project(":components:test-support")
+}

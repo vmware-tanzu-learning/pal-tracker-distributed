@@ -1,0 +1,7 @@
+import io.pivotal.pal.tracker.gradlebuild.CfMigrationPlugin
+import io.pivotal.pal.tracker.gradlebuild.LocalMigrationPlugin
+
+subprojects {
+    apply plugin: LocalMigrationPlugin
+    apply plugin: CfMigrationPlugin
+}
