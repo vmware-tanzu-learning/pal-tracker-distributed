@@ -1,0 +1,565 @@
+{
+	"info": {
+		"_postman_id": "d04b8292-6138-4ee8-b9a3-9cbda94d2f20",
+		"name": "PAL-Tracker-Distributed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Primary Flow",
+			"item": [
+				{
+					"name": "Create and Verify User",
+					"item": [
+						{
+							"name": "Register New User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "44b740b6-f2ab-4102-bfd4-9206e1427525",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+											"",
+											"tests[\"userId is valid\"] = jsonData.userId !== null;",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "0cdc779a-f5f2-444f-892b-a14ec14d21f4",
+										"exec": [
+											"var userNameSuffix = new Date().getTime()",
+											"var userName = pm.environment.get(\"userNamePrefix\") + \"-\" + userNameSuffix;",
+											"postman.setEnvironmentVariable(\"userName\",userName)",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"{{userName}}\"}"
+								},
+								"url": {
+									"raw": "{{registration-server-route}}/registration",
+									"host": [
+										"{{registration-server-route}}"
+									],
+									"path": [
+										"registration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "22898cc2-729a-488c-9ac4-01d6a808be6f",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"tests[\"userId is valid\"] = jsonData.userId !== null;",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{registration-server-route}}/users/{{userId}}",
+									"host": [
+										"{{registration-server-route}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Accounts By Owner Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "99e62c1b-9beb-493e-bd18-6ac6ec5c2af9",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"accountId\", jsonData[0].id);",
+											"",
+											"tests[\"accountId is valid\"] = jsonData.accountId !== null;",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{registration-server-route}}/accounts?ownerId={{userId}}",
+									"host": [
+										"{{registration-server-route}}"
+									],
+									"path": [
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "ownerId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create and Verify Project",
+					"item": [
+						{
+							"name": "Add New Project",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+											"",
+											"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+										"exec": [
+											"var projectNameSuffix = new Date().getTime();",
+											"var projectName = pm.environment.get(\"projectNamePrefix\") + \"-\" + projectNameSuffix;",
+											"postman.setEnvironmentVariable(\"projectName\",projectName)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"{{projectName}}\", \"accountId\": {{accountId}} }"
+								},
+								"url": {
+									"raw": "{{registration-server-route}}/projects",
+									"host": [
+										"{{registration-server-route}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Projects By Account Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{registration-server-route}}/projects?accountId={{accountId}}",
+									"host": [
+										"{{registration-server-route}}"
+									],
+									"path": [
+										"projects"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "{{accountId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create and Verify Allocation",
+					"item": [
+						{
+							"name": "Add New Allocation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+											"",
+											"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"projectId\": {{projectId}},\n\t\"userId\": {{userId}}, \n\t\"firstDay\": \"2015-05-17\", \n\t\"lastDay\": \"2015-05-18\"\n}"
+								},
+								"url": {
+									"raw": "{{allocations-server-route}}/allocations",
+									"host": [
+										"{{allocations-server-route}}"
+									],
+									"path": [
+										"allocations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Allocations by Project Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{allocations-server-route}}/allocations?projectId={{projectId}}",
+									"host": [
+										"{{allocations-server-route}}"
+									],
+									"path": [
+										"allocations"
+									],
+									"query": [
+										{
+											"key": "projectId",
+											"value": "{{projectId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create and Verify Story",
+					"item": [
+						{
+							"name": "Add Story",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+											"",
+											"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+										"exec": [
+											"var storyNameSuffix = new Date().getTime();",
+											"var storyName = pm.environment.get(\"storyNamePrefix\") + \"-\" + storyNameSuffix;",
+											"postman.setEnvironmentVariable(\"storyName\",storyName)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"projectId\": {{projectId}}, \n\t\"name\": \"{{storyName}}\"\n}"
+								},
+								"url": {
+									"raw": "{{backlog-server-route}}/stories",
+									"host": [
+										"{{backlog-server-route}}"
+									],
+									"path": [
+										"stories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Stories by Project Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{backlog-server-route}}/stories?projectId={{projectId}}",
+									"host": [
+										"{{backlog-server-route}}"
+									],
+									"path": [
+										"stories"
+									],
+									"query": [
+										{
+											"key": "projectId",
+											"value": "{{projectId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create and Verify Time Entry",
+					"item": [
+						{
+							"name": "Add New Time Entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7be4977d-eda5-4b68-b2c4-f656a8b718cc",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"timeEntryId\", jsonData.id);",
+											"",
+											"tests[\"timeEntryId is valid\"] = jsonData.timeEntryId !== null;",
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"projectId\": {{projectId}}, \"userId\": {{userId}}, \"date\": \"2015-05-17\", \"hours\": 6}"
+								},
+								"url": {
+									"raw": "{{timesheets-server-route}}/time-entries",
+									"host": [
+										"{{timesheets-server-route}}"
+									],
+									"path": [
+										"time-entries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Time Entries By User Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5274d142-a23b-4971-9714-98e166ab7f61",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{timesheets-server-route}}/time-entries?userId={{userId}}",
+									"host": [
+										"{{timesheets-server-route}}"
+									],
+									"path": [
+										"time-entries"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cbbd4907-7ccc-4841-a03b-d565ebc0905f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "41c8aa00-8168-493e-a13b-c3f53f401037",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

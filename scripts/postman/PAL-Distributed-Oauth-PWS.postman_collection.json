@@ -1,0 +1,628 @@
+{
+	"info": {
+		"_postman_id": "9d74606f-a8c6-4bf2-ad83-611006b39cad",
+		"name": "PAL-Distributed-Oauth-PWS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "44b740b6-f2ab-4102-bfd4-9206e1427525",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+							"",
+							"tests[\"userId is valid\"] = jsonData.userId !== null;",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0cdc779a-f5f2-444f-892b-a14ec14d21f4",
+						"exec": [
+							"var userNameSuffix = new Date().getTime()",
+							"var userName = pm.environment.get(\"userNamePrefix\") + \"-\" + userNameSuffix;",
+							"postman.setEnvironmentVariable(\"userName\",userName)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"{{userName}}\"}"
+				},
+				"url": {
+					"raw": "{{registration-server-route}}/registration",
+					"host": [
+						"{{registration-server-route}}"
+					],
+					"path": [
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22898cc2-729a-488c-9ac4-01d6a808be6f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"userId is valid\"] = jsonData.userId !== null;",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{registration-server-route}}/users/{{userId}}",
+					"host": [
+						"{{registration-server-route}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Accounts By Owner Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "99e62c1b-9beb-493e-bd18-6ac6ec5c2af9",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"accountId\", jsonData[0].id);",
+							"",
+							"tests[\"accountId is valid\"] = jsonData.accountId !== null;",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{registration-server-route}}/accounts?ownerId={{userId}}",
+					"host": [
+						"{{registration-server-route}}"
+					],
+					"path": [
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "ownerId",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+							"",
+							"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+						"exec": [
+							"var projectNameSuffix = new Date().getTime();",
+							"var projectName = pm.environment.get(\"projectNamePrefix\") + \"-\" + projectNameSuffix;",
+							"postman.setEnvironmentVariable(\"projectName\",projectName)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"{{projectName}}\", \"accountId\": {{accountId}} }"
+				},
+				"url": {
+					"raw": "{{registration-server-route}}/projects",
+					"host": [
+						"{{registration-server-route}}"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects By Account Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNzZjODIwMDVlNzE0NzJiYmQ2YTdiZTllNjcyMmNlOSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIyMjExZGU0YSIsImlhdCI6MTU1NzM3NTQ1OCwiZXhwIjoxNTU3NDE4NjU4LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.HbU9KzoOncRr0xZOrQLNBZZccCe7RxK-8Gccclxi1daWCeVeCDaYEw2WBf52_1RDXswtCwZNNvdIR2Bd-XvImZaV9m1peVTynglmGudwLEmt1EpB8rEF9UQIaET7b56JHi7XYAXz_K1IWO69MSyrFymipPkHpol98dfH5cnYeYrQUem7yK3627FpmTK7cFEYem80CVlg9o920x3mqe2AYu6tp87KOTLOmxYhhFDYMMZqCSFP59kwBG1ho0Z25kEi3kQaLrm6lzGicd5qSAJDBd277mDNDkcwbUFS2Qnq3Ur7itFnWjJCsYCjiDjbexzrxqpCwVITEkGmtfQCzviiLg",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{registration-server-route}}/projects?accountId={{accountId}}",
+					"host": [
+						"{{registration-server-route}}"
+					],
+					"path": [
+						"projects"
+					],
+					"query": [
+						{
+							"key": "accountId",
+							"value": "{{accountId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Allocation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+							"",
+							"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"projectId\": {{projectId}},\n\t\"userId\": {{userId}}, \n\t\"firstDay\": \"2015-05-17\", \n\t\"lastDay\": \"2015-05-18\"\n}"
+				},
+				"url": {
+					"raw": "{{allocations-server-route}}/allocations",
+					"host": [
+						"{{allocations-server-route}}"
+					],
+					"path": [
+						"allocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Allocations by Project Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{allocations-server-route}}/allocations?projectId={{projectId}}",
+					"host": [
+						"{{allocations-server-route}}"
+					],
+					"path": [
+						"allocations"
+					],
+					"query": [
+						{
+							"key": "projectId",
+							"value": "{{projectId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c8998a2-8ea7-42ae-bcaa-df64895ef1a8",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"projectId\", jsonData.id);",
+							"",
+							"tests[\"projectId is valid\"] = jsonData.projectId !== null;",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "91be115d-3bd4-4e57-9c8d-8b2a32598e3c",
+						"exec": [
+							"var storyNameSuffix = new Date().getTime();",
+							"var storyName = pm.environment.get(\"storyNamePrefix\") + \"-\" + storyNameSuffix;",
+							"postman.setEnvironmentVariable(\"storyName\",storyName)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"projectId\": {{projectId}}, \n\t\"name\": \"{{storyName}}\"\n}"
+				},
+				"url": {
+					"raw": "{{backlog-server-route}}/stories",
+					"host": [
+						"{{backlog-server-route}}"
+					],
+					"path": [
+						"stories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stories by Project Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bef64a20-a517-4161-9b9b-e8d2e6be9f52",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{backlog-server-route}}/stories?projectId={{projectId}}",
+					"host": [
+						"{{backlog-server-route}}"
+					],
+					"path": [
+						"stories"
+					],
+					"query": [
+						{
+							"key": "projectId",
+							"value": "{{projectId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Time Entry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7be4977d-eda5-4b68-b2c4-f656a8b718cc",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"timeEntryId\", jsonData.id);",
+							"",
+							"tests[\"timeEntryId is valid\"] = jsonData.timeEntryId !== null;",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"projectId\": {{projectId}}, \"userId\": {{userId}}, \"date\": \"2015-05-17\", \"hours\": 6}"
+				},
+				"url": {
+					"raw": "{{timesheets-server-route}}/time-entries",
+					"host": [
+						"{{timesheets-server-route}}"
+					],
+					"path": [
+						"time-entries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Time Entries By User Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5274d142-a23b-4971-9714-98e166ab7f61",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vcGFsLnVhYS5ydW4ucGl2b3RhbC5pby90b2tlbl9rZXlzIiwia2lkIjoic2hhMi0yMDE3LTAxLTIwLWtleSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMjY4Y2M1Y2M4ZWE0MjAwYTg0MDRjYWEzYTA0MjhiMSIsInN1YiI6ImRjOWVkZDY2LWI2YTctNDMwOC1iMmQ2LTkxNmM1NWVjOGViYSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiY2lkIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiYXpwIjoiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzZmMwNDQzNiIsImlhdCI6MTU1NzM3Njg0NiwiZXhwIjoxNTU3NDIwMDQ2LCJpc3MiOiJodHRwczovL3BhbC51YWEucnVuLnBpdm90YWwuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiIwZTA4ODdhNC1iODMwLTQxZTQtYTFhOC03ODk4NzgwMjViNmYiLCJhdWQiOlsidWFhIiwiZGM5ZWRkNjYtYjZhNy00MzA4LWIyZDYtOTE2YzU1ZWM4ZWJhIl19.jSohJ5u_5EKee88qfcbNLIST8he1XYqJT6hpHisyKau2c_cjCpGHXE49Vug2nrSI0ezYliS0MVhR3wtRFKkzRLlHRArhBI267uhUTKPThndnCwcDPhgHDdT95DQFEAIeR2-fxnANBxDIP8HUAa344MF-MVld5-CbibPbYiU56hj0z6zGrwMqc-w0B5qabO5wYG-8UCfuUC5tNVVS4lnRzeSL5E6g4Jg1MyZAtvt7vc4t-Zt0keyHxuHEejY28KCnm98JZwNnw6rYckBogwj5osIBg_oLp_F9ZxbI_zPwiRfgH0q4vAnaoirdqUFS2KkKpAERxTmgncO77ejukXYd2A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{timesheets-server-route}}/time-entries?userId={{userId}}",
+					"host": [
+						"{{timesheets-server-route}}"
+					],
+					"path": [
+						"time-entries"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
